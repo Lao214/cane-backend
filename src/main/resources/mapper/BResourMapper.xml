@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.integratedHub.dao.BResourMapper">
+
+
+    <resultMap id="BResourMap" type="com.example.integratedHub.entity.BResour" autoMapping="true"></resultMap>
+
+    <!--条件分页查询-->
+    <select id="selectPage" resultMap="BResourMap">
+        SELECT *
+        FROM b_resour
+        <where>
+            <if test="vo.keyword != null and vo.keyword != ''">
+                and (resour_name like CONCAT('%',#{vo.keyword},'%')
+                or  resour_des like CONCAT('%',#{vo.keyword},'%'))
+            </if>
+            <if test="vo.type != null and vo.type != ''">
+                and resour_type = #{vo.type}
+            </if>
+        </where>
+        order by id desc
+    </select>
+
+    <select id="selectPageList" resultMap="BResourMap">
+        SELECT *
+        FROM b_resour
+        <where>
+            <if test="vo.keyword != null and vo.keyword != ''">
+                and (resour_name like CONCAT('%',#{vo.keyword},'%')
+                or  resour_des like CONCAT('%',#{vo.keyword},'%'))
+            </if>
+            <if test="vo.resourType != null and vo.resourType != ''">
+                and resour_type = #{vo.resourType}
+            </if>
+            <if test="vo.resourFirstType != null and vo.resourFirstType != ''">
+                and resour_first_type = #{vo.resourFirstType}
+            </if>
+        </where>
+        order by id desc
+    </select>
+
+    <select id="countEveryType" resultType="com.example.integratedHub.entity.Vo.CountEveryTypeVo">
+        SELECT
+            COUNT(CASE WHEN resour_type = '选' THEN 1 END) AS selectCount,
+            COUNT(CASE WHEN resour_type = '育' THEN 1 END) AS educateCount,
+            COUNT(CASE WHEN resour_type = '用' THEN 1 END) AS useCount,
+            COUNT(CASE WHEN resour_type = '留' THEN 1 END) AS keepCount
+        FROM b_resour
+        <where>
+            <if test="vo.keyword != null and vo.keyword != ''">
+                and (resour_name like CONCAT('%',#{vo.keyword},'%')
+                or  resour_des like CONCAT('%',#{vo.keyword},'%'))
+            </if>
+            <if test="vo.resourType != null and vo.resourType != ''">
+                and resour_type = #{vo.resourType}
+            </if>
+            <if test="vo.resourFirstType != null and vo.resourFirstType != ''">
+                and resour_first_type = #{vo.resourFirstType}
+            </if>
+        </where>
+        order by id desc
+    </select>
+
+</mapper>

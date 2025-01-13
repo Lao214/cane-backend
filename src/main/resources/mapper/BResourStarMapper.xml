@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.integratedHub.dao.BResourStarMapper">
+
+    <resultMap id="StarMap" type="com.example.integratedHub.entity.BResourStar" autoMapping="true"></resultMap>
+
+    <select id="getStarByKey" resultMap="StarMap">
+        SELECT
+            brs.id,
+            brs.star_resour_key,
+            brs.star_folder_key,
+            brs.username,
+            brs.create_time,
+            br.resour_name,
+            br.resour_type,
+            br.resour_first_type,
+            br.resour_icon
+        FROM
+            b_resour_star brs
+        lEFT JOIN
+            b_resour br
+        ON
+            br.resour_key = brs.star_resour_key
+        WHERE
+            brs.star_folder_key = #{key}
+    </select>
+
+</mapper>

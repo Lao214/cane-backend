@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.integratedHub.dao.BCommentMapper">
+
+    <resultMap id="CommentMap" type="com.example.integratedHub.entity.BComment" autoMapping="true"></resultMap>
+
+    <!--条件分页查询-->
+    <select id="getCommentList" resultMap="CommentMap">
+        SELECT
+            bc.id,
+            bc.username,
+            bc.comment,
+            bc.resour_key,
+            bc.comment_type,
+            bc.parent_id,
+            bc.root_comment_id,
+            bc.is_deleted,
+            bc.comment_like_count,
+            bc.create_time,
+            bc.images_urls,
+            bu.nickname,
+            bu.avatar
+        FROM
+            b_comment bc
+        left join
+            b_user bu
+        ON
+            bu.username = bc.username
+        WHERE
+            bc.resour_key = #{resourKey}
+        ORDER BY
+            id desc
+    </select>
+
+    <select id="getMyCommentIds" resultType="java.lang.String">
+        SELECT
+            id
+        FROM
+            b_comment
+        WHERE
+            username = #{username}
+    </select>
+
+
+    <select id="selectPage" resultMap="CommentMap">
+        SELECT
+            bc.id,
+            bc.username,
+            bc.comment,
+            bc.resour_key,
+            bc.comment_type,
+            bc.parent_id,
+            bc.root_comment_id,
+            bc.is_deleted,
+            bc.comment_like_count,
+            bc.create_time,
+            bc.images_urls,
+            bc.is_read,
+            bu.nickname,
+            bu.avatar
+        FROM
+            b_comment bc
+        left join
+            b_user bu
+        ON
+            bu.username = bc.username
+        WHERE
+            bc.username != #{username}
+        AND
+            bc.parent_id IN
+            <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        ORDER BY
+            id desc
+    </select>
+
+</mapper>

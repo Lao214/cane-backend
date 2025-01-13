@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.integratedHub.dao.BNewsMapper">
+
+    <resultMap id="NewMap" type="com.example.integratedHub.entity.BNews" autoMapping="true"></resultMap>
+
+    <!--条件分页查询-->
+    <select id="selectPage" resultMap="NewMap">
+        SELECT id,new_title,new_sub,view_count,create_time,new_key,update_time,new_key
+        FROM b_news
+        <where>
+            <if test="vo.keyword != null and vo.keyword != ''">
+                and (new_title like CONCAT('%',#{vo.keyword},'%')
+                or  new_sub like CONCAT('%',#{vo.keyword},'%')
+                or  new_tags like CONCAT('%',#{vo.keyword},'%')
+                or  new_content like CONCAT('%',#{vo.keyword},'%'))
+            </if>
+        </where>
+        order by id desc
+    </select>
+
+</mapper>

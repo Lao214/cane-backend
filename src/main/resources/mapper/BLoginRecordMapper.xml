@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.integratedHub.dao.BLoginRecordMapper">
+
+    <resultMap id="LoginRecordMap" type="com.example.integratedHub.entity.BLoginRecord" autoMapping="true"></resultMap>
+
+    <select id="selectPage" resultMap="LoginRecordMap">
+        select *
+        from b_login_record
+        <where>
+            1 = 1
+            <if test="vo.username != null and vo.username != ''">
+                and (username like CONCAT('%',#{vo.username},'%'))
+            </if>
+            <if test="vo.loginIp != null and vo.loginIp != ''">
+                and (login_ip like CONCAT('%',#{vo.loginIp},'%'))
+            </if>
+            <if test="vo.route != null and vo.route != ''">
+                and route = #{vo.route}
+            </if>
+        </where>
+        order by id desc
+    </select>
+
+    <resultMap id="loginRecordResultMap" type="com.example.integratedHub.entity.statisticsVo.LoginRecordEveryWeek">
+        <result property="day" column="day"/>
+        <result property="weekdayName" column="weekday_name"/>
+        <result property="count" column="count"/>
+    </resultMap>
+
+    <select id="getThisWeekLoginRecord" resultMap="loginRecordResultMap">
+        SELECT
+            DATE(create_time) AS day,
+            CASE DAYOFWEEK(create_time)
+            WHEN 1 THEN 'Sunday'
+            WHEN 2 THEN 'Monday'
+            WHEN 3 THEN 'Tuesday'
+            WHEN 4 THEN 'Wednesday'
+            WHEN 5 THEN 'Thursday'
+            WHEN 6 THEN 'Friday'
+            WHEN 7 THEN 'Saturday'
+            END AS weekday_name,
+            COUNT(*) AS count
+        FROM
+            b_login_record blr
+        WHERE
+            YEARWEEK(create_time, 1) = YEARWEEK(CURDATE(), 1)
+        GROUP BY
+            DATE(create_time),
+            CASE DAYOFWEEK(create_time)
+            WHEN 1 THEN 'Sunday'
+            WHEN 2 THEN 'Monday'
+            WHEN 3 THEN 'Tuesday'
+            WHEN 4 THEN 'Wednesday'
+            WHEN 5 THEN 'Thursday'
+            WHEN 6 THEN 'Friday'
+            WHEN 7 THEN 'Saturday'
+            END
+        ORDER BY
+            DATE(create_time)
+    </select>
+
+
+</mapper>

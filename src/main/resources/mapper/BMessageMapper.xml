@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.integratedHub.dao.BMessageMapper">
+
+
+    <select id="selectPage" resultType="com.example.integratedHub.entity.BMessage">
+        select * from b_message
+        <where>
+            <if test="vo.msgTitle != null and vo.msgTitle != ''">
+                and msg_title like concat('%',#{vo.msgTitle},'%')
+            </if>
+            <if test="vo.msgSub != null and vo.msgSub != ''">
+                and msg_sub like concat('%',#{vo.msgSub},'%')
+            </if>
+            <if test="vo.msgType != null and vo.msgType != ''">
+                and msg_type = #{vo.msgSub}
+            </if>
+            <if test="vo.receiver != null and vo.receiver != ''">
+                AND receiver = #{vo.receiver}
+            </if>
+        </where>
+    </select>
+</mapper>
