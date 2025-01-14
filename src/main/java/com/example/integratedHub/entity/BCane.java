@@ -122,5 +122,8 @@ public class BCane implements Serializable {
     //@ApiModelProperty(value = "专家建议")
     private String expertAdvice;
 
+    //@ApiModelProperty(value = "推荐种植的区域和季节")
+    private String recommendedPlanting;
+
 
 }

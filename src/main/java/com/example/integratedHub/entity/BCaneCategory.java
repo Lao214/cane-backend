@@ -64,5 +64,11 @@ public class BCaneCategory implements Serializable {
     private Integer categoryLevel;
 
     @TableField(exist = false)
+    private String label;
+
+    @TableField(exist = false)
+    private String value;
+
+    @TableField(exist = false)
     private List<BCaneCategory> children;
 }

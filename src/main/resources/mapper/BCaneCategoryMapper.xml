@@ -11,6 +11,7 @@
             parent_id,
             description,
             image_path,
+            category_level,
             sort,
             status
         from b_cane_category

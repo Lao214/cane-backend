@@ -7,8 +7,10 @@ import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.integratedHub.entity.BCaneCategory;
 import com.example.integratedHub.entity.Vo.NewQueryVo;
+import com.example.integratedHub.entity.enumVo.ErrorCode;
 import com.example.integratedHub.service.BCaneCategoryService;
 import com.example.integratedHub.utils.CategoryHelper;
+import com.example.integratedHub.utils.JwtUtil;
 import com.example.integratedHub.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -49,22 +52,40 @@ public class BCaneCategoryController {
 
 //    @ApiOperation("获取分类树")
     @GetMapping("getCategoryTree")
-    public Result getTypeTree(NewQueryVo newQueryVo, HttpServletRequest request) {
+    public Result getCategoryTree(NewQueryVo newQueryVo, HttpServletRequest request) {
         QueryWrapper<BCaneCategory> bCourseTypeQueryWrapper = new QueryWrapper<>();
         if(StringUtils.isNotBlank(newQueryVo.getKeyword())) {
-            bCourseTypeQueryWrapper.like("name",newQueryVo.getKeyword());
+            bCourseTypeQueryWrapper.like("category_name",newQueryVo.getKeyword());
         }
-        bCourseTypeQueryWrapper.select("id,name,parent_id,create_time,type_level,name as label,name as value");
+        bCourseTypeQueryWrapper.select("id,parent_id,create_time,category_level,category_name as label,id as value");
         List<BCaneCategory> list = bCaneCategoryService.list(bCourseTypeQueryWrapper);
         List<BCaneCategory> TypeTree = CategoryHelper.bulidTree(list);
         return Result.success().data("data",TypeTree);
     }
 
+//    @GetMapping("getCategoryTreeForSearch")
+//    public Result getCategoryTreeForSearch(HttpServletRequest request) {
+//        QueryWrapper<BCaneCategory> bCourseTypeQueryWrapper = new QueryWrapper<>();
+//        bCourseTypeQueryWrapper.select("id,name,parent_id,create_time,category_level,category_name as label,id as value");
+//        List<BCaneCategory> list = bCaneCategoryService.list(bCourseTypeQueryWrapper);
+//        List<BCaneCategory> TypeTree = CategoryHelper.bulidTree(list);
+//        return Result.success().data("data",TypeTree);
+//    }
+
 //    @ApiOperation("addCourseType")
     @PostMapping("addCategory")
     public Result addCategory(@RequestBody BCaneCategory bCaneCategory, HttpServletRequest request) {
+        // 获取请求头token字符串
+        String token = request.getHeader("inhub-token");
+        if (token == null) {
+            return Result.error().code(ErrorCode.TOKEN_NOT_EXIST.getCode()).msg(ErrorCode.TOKEN_NOT_EXIST.getMsg());
+        }
+        Map<String, String> memberIdByJwtToken = JwtUtil.getMemberIdByJwtToken(token);
+        String username = memberIdByJwtToken.get("username");
         //创建page对象
         bCaneCategory.setCreateTime(new Date());
+        bCaneCategory.setCreateBy(username);
+        bCaneCategory.setUpdateBy(username);
         boolean save = bCaneCategoryService.save(bCaneCategory);
         if(save) {
             return Result.success().data("one",bCaneCategory);
@@ -76,8 +97,14 @@ public class BCaneCategoryController {
 //    @ApiOperation("updateCourseType")
     @PostMapping("updateCategory")
     public Result updateCategory(@RequestBody BCaneCategory bCaneCategory, HttpServletRequest request) {
-        //创建page对象
-        bCaneCategory.setCreateTime(new Date());
+        String token = request.getHeader("inhub-token");
+        if (token == null) {
+            return Result.error().code(ErrorCode.TOKEN_NOT_EXIST.getCode()).msg(ErrorCode.TOKEN_NOT_EXIST.getMsg());
+        }
+        Map<String, String> memberIdByJwtToken = JwtUtil.getMemberIdByJwtToken(token);
+        String username = memberIdByJwtToken.get("username");
+        bCaneCategory.setUpdateTime(new Date());
+        bCaneCategory.setUpdateBy(username);
         boolean save = bCaneCategoryService.updateById(bCaneCategory);
         if(save) {
             return Result.success().data("one",bCaneCategory);

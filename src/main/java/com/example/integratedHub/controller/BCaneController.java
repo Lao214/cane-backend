@@ -89,6 +89,12 @@ public class BCaneController {
         return Result.success().data("data",pageModel);
     }
 
+    @GetMapping("getCaneById/{id}")
+    public Result getCaneById(@PathVariable Integer id, HttpServletRequest request) {
+        BCane bCane = bCaneService.getById(id);
+        return Result.success().data("data",bCane);
+    }
+
     @DeleteMapping("delCane/{id}")
     public Result removeCategoryById(@PathVariable Integer id, HttpServletRequest request) {
         // 获取请求头token字符串
