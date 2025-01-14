@@ -2,13 +2,10 @@ package com.example.integratedHub.controller;
 
 
 import cn.hutool.core.lang.UUID;
-import cn.hutool.jwt.JWTUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.example.integratedHub.entity.BResourFile;
-import com.example.integratedHub.entity.BResourStarFolder;
 import com.example.integratedHub.entity.BUser;
 import com.example.integratedHub.entity.BUserRole;
 import com.example.integratedHub.entity.Vo.ChangePassVo;
@@ -16,13 +13,11 @@ import com.example.integratedHub.entity.Vo.UserQueryVo;
 import com.example.integratedHub.entity.enumVo.ErrorCode;
 import com.example.integratedHub.entity.enumVo.RoleEnum;
 import com.example.integratedHub.entity.securityVo.LoginUser;
-import com.example.integratedHub.service.BResourStarFolderService;
 import com.example.integratedHub.service.BUserRoleService;
 import com.example.integratedHub.service.BUserService;
 import com.example.integratedHub.utils.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,7 +25,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
 import java.util.Map;
 import java.util.Objects;
 
@@ -58,8 +52,6 @@ public class BUserController {
     @Autowired
     RedisService redisService;
 
-    @Autowired
-    BResourStarFolderService bResourStarFolderService;
 
     @Autowired
     MinioUtil minioUtil;
@@ -161,16 +153,16 @@ public class BUserController {
             bUserRole.setRoleId(RoleEnum.GENERAL_USER.getRoleId());
             bUserRoleService.save(bUserRole);
 
-            BResourStarFolder bResourStarFolder = new BResourStarFolder();
-            bResourStarFolder.setUsername(bUser.getUsername());
-            bResourStarFolder.setStarFolderName("默认收藏夹");
+//            BResourStarFolder bResourStarFolder = new BResourStarFolder();
+//            bResourStarFolder.setUsername(bUser.getUsername());
+//            bResourStarFolder.setStarFolderName("默认收藏夹");
             cn.hutool.core.lang.UUID uuid = UUID.randomUUID();
             // 转换为字符串并移除所有的连字符
             String uuidWithoutHyphens = uuid.toString().replace("-", "");
-            bResourStarFolder.setStarFolderKey(uuidWithoutHyphens);
-            bResourStarFolder.setCreateTime(new Date());
-            bResourStarFolder.setIsPublic("private");
-            bResourStarFolderService.save(bResourStarFolder);
+//            bResourStarFolder.setStarFolderKey(uuidWithoutHyphens);
+//            bResourStarFolder.setCreateTime(new Date());
+//            bResourStarFolder.setIsPublic("private");
+//            bResourStarFolderService.save(bResourStarFolder);
 
             return Result.success().msg("添加成功");
         } else  {

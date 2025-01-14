@@ -4,9 +4,7 @@ package com.example.integratedHub.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.example.integratedHub.entity.BComment;
 import com.example.integratedHub.entity.BMessage;
-import com.example.integratedHub.service.BCommentService;
 import com.example.integratedHub.service.BMessageService;
 import com.example.integratedHub.utils.JwtUtil;
 import com.example.integratedHub.utils.Result;
@@ -161,43 +159,43 @@ public class BMessageController {
         }
     }
 
-    @GetMapping("getMyUnread")
-    public Result getMyUnread(HttpServletRequest request) {
-        // 获取请求头token字符串
-        String token = request.getHeader("inhub-token");
-        String username = "";
-        if (token != null) {
-            Map<String, String> memberIdByJwtToken = JwtUtil.getMemberIdByJwtToken(token);
-            username = memberIdByJwtToken.get("username");
-        }
-        // 查出未读通知数量
-        QueryWrapper<BMessage> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("receiver",username);
-        queryWrapper.eq("is_read",0);
-        int count = bMessageService.count(queryWrapper);
-
-        int count2 = 0;
-        List<String> ids = bCommentService.getMyCommentIds(username);
-        if(ids != null) {
-            QueryWrapper<BComment> bCommentQueryWrapper = new QueryWrapper<>();
-            bCommentQueryWrapper.ne("username",username);
-            bCommentQueryWrapper.eq("is_read",0);
-            bCommentQueryWrapper.in("parent_id",ids);
-            count2 = bCommentService.count(bCommentQueryWrapper);
-        }
-        // count 是系统通知的计数，count2是"回复我的"计数
-        return Result.success().data("count",count).data("count2",count2);
-    }
-
-    @PostMapping("readReply")
-    public Result readReply(@RequestBody List<BComment> bComments) {
-        boolean up = bCommentService.updateBatchById(bComments);
-        if(up) {
-            return Result.success();
-        } else  {
-            return Result.error().msg("更新消息状态失败");
-        }
-    }
+//    @GetMapping("getMyUnread")
+//    public Result getMyUnread(HttpServletRequest request) {
+//        // 获取请求头token字符串
+//        String token = request.getHeader("inhub-token");
+//        String username = "";
+//        if (token != null) {
+//            Map<String, String> memberIdByJwtToken = JwtUtil.getMemberIdByJwtToken(token);
+//            username = memberIdByJwtToken.get("username");
+//        }
+//        // 查出未读通知数量
+//        QueryWrapper<BMessage> queryWrapper = new QueryWrapper<>();
+//        queryWrapper.eq("receiver",username);
+//        queryWrapper.eq("is_read",0);
+//        int count = bMessageService.count(queryWrapper);
+//
+//        int count2 = 0;
+//        List<String> ids = bCommentService.getMyCommentIds(username);
+//        if(ids != null) {
+//            QueryWrapper<BComment> bCommentQueryWrapper = new QueryWrapper<>();
+//            bCommentQueryWrapper.ne("username",username);
+//            bCommentQueryWrapper.eq("is_read",0);
+//            bCommentQueryWrapper.in("parent_id",ids);
+//            count2 = bCommentService.count(bCommentQueryWrapper);
+//        }
+//        // count 是系统通知的计数，count2是"回复我的"计数
+//        return Result.success().data("count",count).data("count2",count2);
+//    }
+//
+//    @PostMapping("readReply")
+//    public Result readReply(@RequestBody List<BComment> bComments) {
+//        boolean up = bCommentService.updateBatchById(bComments);
+//        if(up) {
+//            return Result.success();
+//        } else  {
+//            return Result.error().msg("更新消息状态失败");
+//        }
+//    }
 
     @PostMapping("readNotification")
     public Result readNotification(@RequestBody List<BMessage> bMessageList) {
