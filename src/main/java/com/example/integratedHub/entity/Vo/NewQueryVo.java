@@ -24,4 +24,6 @@ public class NewQueryVo {
     private String type;
 
     private String isRead;
+
+    private Integer categoryLevel;
 }

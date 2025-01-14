@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.integratedHub.dao.BCaneMapper">
+
+    <resultMap id="BCaneMap" type="com.example.integratedHub.entity.BCane" autoMapping="true"></resultMap>
+
+    <select id="selectPage" resultMap="BCaneMap">
+        SELECT
+        id,
+        cane_name,
+        cane_alias,
+        genericname,
+        category_id,
+        status,
+        create_time,
+        create_by
+        from b_cane_category
+        <where>
+            <if test="vo.caneName != null and vo.caneName != ''">
+                and (cane_name like CONCAT('%',#{vo.caneName},'%'))
+            </if>
+            <if test="vo.categoryId != null and vo.categoryId != ''">
+                AND category_id = #{vo.categoryId}
+            </if>
+        </where>
+        order by id desc
+    </select>
+</mapper>

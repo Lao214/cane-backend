@@ -32,8 +32,8 @@ public class BMessageController {
     @Autowired
     private BMessageService bMessageService;
 
-    @Autowired
-    private BCommentService bCommentService;
+//    @Autowired
+//    private BCommentService bCommentService;
 
     @GetMapping("list/{page}/{limit}")
     public Result list(@PathVariable Long page, @PathVariable Long limit, BMessage bMessage, HttpServletRequest request) {
