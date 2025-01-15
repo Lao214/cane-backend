@@ -2,6 +2,8 @@ package com.example.integratedHub.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import java.util.Date;
+
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import lombok.Data;
@@ -124,6 +126,15 @@ public class BCane implements Serializable {
 
     //@ApiModelProperty(value = "推荐种植的区域和季节")
     private String recommendedPlanting;
+
+    @TableField(exist = false)
+    private String categoryName;
+
+    @TableField(exist = false)
+    private String label;
+
+    @TableField(exist = false)
+    private String value;
 
 
 }

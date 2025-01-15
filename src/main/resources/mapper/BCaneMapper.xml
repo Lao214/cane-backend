@@ -6,15 +6,19 @@
 
     <select id="selectPage" resultMap="BCaneMap">
         SELECT
-        id,
-        cane_name,
-        cane_alias,
-        genericname,
-        category_id,
-        status,
-        create_time,
-        create_by
-        from b_cane_category
+            bc.id,
+            bc.cane_name,
+            bc.cane_alias,
+            bc.genericname,
+            bc.category_id,
+            bc.status,
+            bc.create_time,
+            bc.create_by,
+            bcc.category_name
+        FROM
+            b_cane bc
+        LEFT JOIN
+            b_cane_category bcc ON bcc.id  = bc.category_id
         <where>
             <if test="vo.caneName != null and vo.caneName != ''">
                 and (cane_name like CONCAT('%',#{vo.caneName},'%'))

@@ -27,7 +27,7 @@ public class JwtUtil {
     /**
      * 过期时间8小时，单位毫秒
      */
-    public static final long EXPIRE = 1000 * 60 * 60 * 8;
+    public static final long EXPIRE = 1000 * 60 * 60 * 144;
 
     /*
      * 秘钥
