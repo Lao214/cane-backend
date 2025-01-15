@@ -1,6 +1,7 @@
 package com.example.integratedHub.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.integratedHub.entity.BCane;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -104,6 +106,15 @@ public class BCaneController {
         } else  {
             return Result.error().msg("删除失败");
         }
+    }
+
+    @GetMapping("getOptions")
+    public Result getOptions(HttpServletRequest request) {
+        // 获取请求头token字符串
+        QueryWrapper<BCane> bCaneQueryWrapper = new QueryWrapper<>();
+        bCaneQueryWrapper.select("id as value","cane_name as label");
+        List<BCane> list = bCaneService.list(bCaneQueryWrapper);
+        return Result.success().data("data",list);
     }
 
 }

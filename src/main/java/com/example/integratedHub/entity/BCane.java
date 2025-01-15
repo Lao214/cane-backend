@@ -25,7 +25,7 @@ public class BCane implements Serializable {
     private static final long serialVersionUID = 1L;
 
     //@ApiModelProperty(value = "甘蔗ID")
-      @TableId(value = "id", type = IdType.AUTO)
+    @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
     //@ApiModelProperty(value = "甘蔗品种名称")
@@ -127,6 +127,8 @@ public class BCane implements Serializable {
     //@ApiModelProperty(value = "推荐种植的区域和季节")
     private String recommendedPlanting;
 
+    private Integer viewCount;
+
     @TableField(exist = false)
     private String categoryName;
 
@@ -136,5 +138,10 @@ public class BCane implements Serializable {
     @TableField(exist = false)
     private String value;
 
+    @TableField(exist = false)
+    private String keyword;
+
+    @TableField(exist = false)
+    private String sortType;
 
 }

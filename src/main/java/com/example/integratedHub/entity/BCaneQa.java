@@ -2,6 +2,8 @@ package com.example.integratedHub.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import java.util.Date;
+
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 //import io.swagger.annotations.ApiModel;
@@ -39,6 +41,8 @@ public class BCaneQa implements Serializable {
     //@ApiModelProperty(value = "提问人")
     private String askUser;
 
+    private String askAvatar;
+
     //@ApiModelProperty(value = "提问人姓名")
     private String askNickname;
 
@@ -50,6 +54,15 @@ public class BCaneQa implements Serializable {
 
     //@ApiModelProperty(value = "回答人姓名")
     private String answerNickname;
+
+    private String answerAvatar;
+
+    private String questionTitle;
+
+    private String isAnswered;
+
+    @TableField(exist = false)
+    private String keyword;
 
 
 }

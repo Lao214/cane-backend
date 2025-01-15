@@ -14,19 +14,28 @@
             bc.status,
             bc.create_time,
             bc.create_by,
-            bcc.category_name
+            bcc.category_name,
+            bc.description,
+            bc.view_count
         FROM
             b_cane bc
         LEFT JOIN
             b_cane_category bcc ON bcc.id  = bc.category_id
         <where>
-            <if test="vo.caneName != null and vo.caneName != ''">
-                and (cane_name like CONCAT('%',#{vo.caneName},'%'))
+            <if test="vo.keyword != null and vo.keyword != ''">
+                AND (bc.cane_name LIKE CONCAT('%', #{vo.keyword}, '%') OR bc.description LIKE CONCAT('%', #{vo.keyword}, '%'))
             </if>
             <if test="vo.categoryId != null and vo.categoryId != ''">
-                AND category_id = #{vo.categoryId}
+                AND bc.category_id = #{vo.categoryId}
             </if>
         </where>
-        order by id desc
+        <choose>
+            <when test="vo.sortType == 'nums'">
+                ORDER BY bc.view_count DESC
+            </when>
+            <otherwise>
+                ORDER BY bc.id DESC
+            </otherwise>
+        </choose>
     </select>
 </mapper>

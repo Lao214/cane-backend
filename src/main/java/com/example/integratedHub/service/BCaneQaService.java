@@ -1,5 +1,7 @@
 package com.example.integratedHub.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.integratedHub.entity.BCaneQa;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -13,4 +15,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface BCaneQaService extends IService<BCaneQa> {
 
+    IPage<BCaneQa> selectPage(Page<BCaneQa> pageParam, BCaneQa bCaneQa);
 }
