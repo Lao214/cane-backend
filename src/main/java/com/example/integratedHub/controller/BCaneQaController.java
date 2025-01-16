@@ -107,7 +107,7 @@ public class BCaneQaController {
         bCaneQa.setAnswerTime(date);
         bCaneQa.setIsAnswered("是");
         bCaneQa.setAnswerAvatar(one.getAvatar());
-        boolean save = bCaneQaService.save(bCaneQa);
+        boolean save = bCaneQaService.updateById(bCaneQa);
         if(save) {
             return Result.success();
         } else  {
