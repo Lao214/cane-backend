@@ -129,8 +129,23 @@ public class BCane implements Serializable {
 
     private Integer viewCount;
 
+    // 抗旱属性
+    private String droughtResistance;
+
+    // 抗寒属性
+    private String coldResistance;
+
+    // 抗黑穗病属性
+    private String smutResistance;
+
     @TableField(exist = false)
     private String categoryName;
+
+    @TableField(exist = false)
+    private String fatherName;
+
+    @TableField(exist = false)
+    private String motherName;
 
     @TableField(exist = false)
     private String label;

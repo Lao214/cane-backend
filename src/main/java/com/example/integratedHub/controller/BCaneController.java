@@ -8,6 +8,7 @@ import com.example.integratedHub.entity.BCane;
 import com.example.integratedHub.entity.BCaneCategory;
 import com.example.integratedHub.entity.Vo.NewQueryVo;
 import com.example.integratedHub.entity.enumVo.ErrorCode;
+import com.example.integratedHub.service.BCaneCategoryService;
 import com.example.integratedHub.service.BCaneService;
 import com.example.integratedHub.utils.JwtUtil;
 import com.example.integratedHub.utils.Result;
@@ -33,6 +34,10 @@ public class BCaneController {
 
     @Autowired
     private BCaneService bCaneService;
+
+
+    @Autowired
+    private BCaneCategoryService bCaneCategoryService;
 
 
     @PostMapping("/addCane")
@@ -97,6 +102,32 @@ public class BCaneController {
         return Result.success().data("data",bCane);
     }
 
+    @GetMapping("getCaneByIdWithQinBen/{id}")
+    public Result getCaneByIdWithQinBen(@PathVariable Integer id, HttpServletRequest request) {
+        BCane bCane = bCaneService.getById(id);
+        if(bCane.getParentId() != null && bCane.getParentId() > 0) {
+            BCane father = bCaneService.getById(bCane.getParentId());
+            bCane.setFatherName(father.getCaneName());
+        } else  {
+            bCane.setFatherName("无父本");
+        }
+
+        if(bCane.getCategoryId() != null && bCane.getCategoryId() > 0) {
+            BCaneCategory caneCategory = bCaneCategoryService.getById(bCane.getCategoryId());
+            bCane.setCategoryName(caneCategory.getCategoryName());
+        }
+
+        if(bCane.getMotherId() != null && bCane.getMotherId() > 0) {
+            BCane mother = bCaneService.getById(bCane.getMotherId());
+            bCane.setMotherName(mother.getCaneName());
+        } else {
+            bCane.setMotherName("无母本");
+        }
+
+        return Result.success().data("data",bCane);
+    }
+
+
     @DeleteMapping("delCane/{id}")
     public Result removeCategoryById(@PathVariable Integer id, HttpServletRequest request) {
         // 获取请求头token字符串
@@ -116,6 +147,7 @@ public class BCaneController {
         List<BCane> list = bCaneService.list(bCaneQueryWrapper);
         return Result.success().data("data",list);
     }
+
 
 }
 
