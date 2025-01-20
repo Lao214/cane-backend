@@ -82,6 +82,31 @@ public class BCaneController {
         }
     }
 
+    @PostMapping("viewCane")
+    public Result viewCane(@RequestBody BCane bCane) {
+        // 假设 bCane 至少包含 id 字段，用于识别要更新的记录
+        if (bCane.getId() == null) {
+            return Result.error().msg("ID不能为空");
+        }
+
+        // 从数据库中获取现有的记录
+        BCane existingBCane = bCaneService.getById(bCane.getId());
+        if (existingBCane == null) {
+            return Result.error().msg("记录不存在");
+        }
+
+        // 对 view_count 进行加一操作
+        existingBCane.setViewCount(existingBCane.getViewCount() + 1);
+
+        // 更新数据库中的记录
+        boolean save = bCaneService.updateById(existingBCane);
+        if(save) {
+            return Result.success();
+        } else  {
+            return Result.error().msg("更新失败");
+        }
+    }
+
     @GetMapping("getCane/{page}/{limit}")
     public Result getCane(@PathVariable Long page, @PathVariable Long limit, BCane bCane, HttpServletRequest request) {
         //创建page对象

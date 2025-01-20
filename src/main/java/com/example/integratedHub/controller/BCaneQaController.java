@@ -62,7 +62,7 @@ public class BCaneQaController {
             bCaneQa.setAskUser("游客" + ipAddr);
             bCaneQa.setAskNickname("游客" + ipAddr);
             bCaneQa.setAskTime(date);
-            bCaneQa.setAskAvatar("http://10.134.149.222:9000/hfe/默认头像-1.png");
+            bCaneQa.setAskAvatar("http://43.136.93.160:9000/hfe/默认头像-1.png");
             boolean save = bCaneQaService.save(bCaneQa);
             if(save) {
                 return Result.success();

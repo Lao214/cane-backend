@@ -80,7 +80,7 @@ public class BUserController {
         // 先删后改
         BUser byId = bUserService.getById(userId);
         String oldAvatar = byId.getAvatar();
-        if(!oldAvatar.equals("http://10.134.149.222:9000/hfe/默认头像-1.png")) {
+        if(!oldAvatar.equals("http://43.136.93.160:9000/hfe/默认头像-1.png")) {
             // 使用lastIndexOf()方法找到最后一个斜杠的索引
             int lastIndex = oldAvatar.lastIndexOf("/");
             // 使用substring()方法提取最后一个斜杠后的部分
@@ -145,7 +145,7 @@ public class BUserController {
         // 对密码进行加密
         String bpePassword = bCryptPasswordEncoder.encode(bUser.getPassword());
         bUser.setPassword(bpePassword);
-        bUser.setAvatar("http://10.134.149.222:9000/hfe/默认头像-1.png");
+        bUser.setAvatar("http://43.136.93.160:9000/hfe/默认头像-1.png");
         boolean save = bUserService.save(bUser);
         if(save) {
             BUserRole bUserRole = new BUserRole();

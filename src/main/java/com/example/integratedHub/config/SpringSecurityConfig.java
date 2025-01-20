@@ -53,9 +53,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/security/login","/news/getHomeNews","/carousel/getCarouselList","/news/getNewByKey/{newKey}","/news/viewNew",
-                        "/news/getPageList/{page}/{limit}","/contact/addContact","/resour/getHomeResourList","/resour/getResourList/{page}/{limit}",
-                        "/resour/countTypes","/resour/getOne/{resourKey}","/comment/getCommentList/{resourKey}","/resourView/addResourView",
-                        "/resourFileDownload/downloadRecord","/resourFileDownload/downloadRecordAll").permitAll()  // 允许登录接口匿名访问
+                        "/news/getPageList/{page}/{limit}","/contact/addContact","/cane/viewCane","/cane/viewCane","/cane/getCane/{page}/{limit}","/cane/getCaneById/{id}",
+                        "/cane/getCaneByIdWithQinBen/{id}","/cane/getOptions","/qa/getCaneQa/{page}/{limit}","/qa/addCaneQa","/qa/getCaneQaById/{id}").permitAll()  // 允许登录接口匿名访问
                 .anyRequest().authenticated();  // 除上述之外的全部请求都需要鉴权认证
         http    // 将自定义JWT校验过滤链方法UsernamePasswordAuthenticationToken过滤链之前
                 .addFilterBefore(jwtSecurityFilter, UsernamePasswordAuthenticationFilter.class)
