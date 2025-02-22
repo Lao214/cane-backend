@@ -50,9 +50,9 @@ public class LoginController {
     }
 
 
-        /*
+    /*
      * 退出登录接口与
-     * */
+     */
     @GetMapping("/logout")
     public Result loginOut() {
         String msg = loginService.loginOut();

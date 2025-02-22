@@ -56,7 +56,7 @@ public class BCane implements Serializable {
     private String stemDiamet;
 
     //@ApiModelProperty(value = "引入时间")
-    private Date intorDates;
+    private String intorDates;
 
     //@ApiModelProperty(value = "引入单位")
     private String intorBusiness;
@@ -67,23 +67,11 @@ public class BCane implements Serializable {
     //@ApiModelProperty(value = "主要种植地区编码")
     private String cityCodes;
 
-    //@ApiModelProperty(value = "种质获取")
-    private String germplasm;
-
     //@ApiModelProperty(value = "审定编号")
     private String apprcode;
 
-    //@ApiModelProperty(value = "选育单位")
-    private String breedUnits;
-
     //@ApiModelProperty(value = "季节")
     private String season;
-
-    //@ApiModelProperty(value = "选育年代")
-    private String breedYear;
-
-    //@ApiModelProperty(value = "参考文献")
-    private String reference;
 
     //@ApiModelProperty(value = "品种特性")
     private String variFeatures;

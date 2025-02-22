@@ -62,6 +62,30 @@ public class BCaneController {
         }
     }
 
+    @PostMapping("/addCaneBatch")
+    public Result addCaneBatch(@RequestBody List<BCane> bCaneList, HttpServletRequest request) {
+        // 获取请求头token字符串
+        String token = request.getHeader("inhub-token");
+        if (token == null) {
+            return Result.error().code(ErrorCode.TOKEN_NOT_EXIST.getCode()).msg(ErrorCode.TOKEN_NOT_EXIST.getMsg());
+        }
+        Map<String, String> memberIdByJwtToken = JwtUtil.getMemberIdByJwtToken(token);
+        String username = memberIdByJwtToken.get("username");
+        Date date =  new Date();
+        for (BCane bCane :bCaneList) {
+            bCane.setCreateBy(username);
+            bCane.setUpdateBy(username);
+            bCane.setCreateTime(date);
+            bCane.setUpdateTime(date);
+        }
+        boolean save = bCaneService.saveBatch(bCaneList);
+        if(save) {
+            return Result.success();
+        } else  {
+            return Result.error().msg("添加失败");
+        }
+    }
+
     @PostMapping("/updateCane")
     public Result updateCane(@RequestBody BCane bCane, HttpServletRequest request) {
         // 获取请求头token字符串
