@@ -38,10 +38,10 @@ public class BCane implements Serializable {
     private String genericname;
 
     //@ApiModelProperty(value = "亲本信息父ID")
-    private Long parentId;
+    private String parentId;
 
     //@ApiModelProperty(value = "亲本信息母ID")
-    private Long motherId;
+    private String motherId;
 
     //@ApiModelProperty(value = "分类ID")
     private Long categoryId;
