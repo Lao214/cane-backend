@@ -16,7 +16,8 @@
             bc.create_by,
             bcc.category_name,
             bc.description,
-            bc.view_count
+            bc.view_count,
+            bc.image_path
         FROM
             b_cane bc
         LEFT JOIN

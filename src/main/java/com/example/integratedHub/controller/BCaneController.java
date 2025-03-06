@@ -154,7 +154,7 @@ public class BCaneController {
     @GetMapping("getCaneByIdWithQinBen/{id}")
     public Result getCaneByIdWithQinBen(@PathVariable Integer id, HttpServletRequest request) {
         BCane bCane = bCaneService.getById(id);
-        if(bCane.getParentId() != null && bCane.getParentId() > 0) {
+        if(bCane.getParentId() != null && !bCane.getParentId().isEmpty()) {
             BCane father = bCaneService.getById(bCane.getParentId());
             bCane.setFatherName(father.getCaneName());
         } else  {
@@ -166,7 +166,7 @@ public class BCaneController {
             bCane.setCategoryName(caneCategory.getCategoryName());
         }
 
-        if(bCane.getMotherId() != null && bCane.getMotherId() > 0) {
+        if(bCane.getMotherId() != null && !bCane.getMotherId().isEmpty()) {
             BCane mother = bCaneService.getById(bCane.getMotherId());
             bCane.setMotherName(mother.getCaneName());
         } else {

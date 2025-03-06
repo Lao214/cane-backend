@@ -3,11 +3,20 @@ package com.example.integratedHub.controller;
 //import cn.dev33.satoken.stp.StpUtil;
 //import cn.hutool.json.JSONUtil;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.example.integratedHub.entity.BCane;
+import com.example.integratedHub.entity.securityVo.LoginUser;
+import com.example.integratedHub.service.BCaneService;
 import com.example.integratedHub.utils.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
+import java.util.Map;
 
 
 /**
@@ -29,71 +38,69 @@ public class MinIOController {
     @Autowired
     RedisService redisService;
 
+    @Autowired
+    private BCaneService bCaneService;
 
 
+    @PostMapping("/uploadCarousel")
+    public Result uploadCarousel(@RequestParam("file") MultipartFile file, @RequestParam("id") Long id, HttpServletRequest request) throws Exception {
+        UploadResponse bucket01 = minioUtil.uploadFile(file, bucketName);
+        System.out.println("bucket01.getMinIoUrl() = " + bucket01.getMinIoUrl());
+        System.out.println("bucket01.getNginxUrl() = " + bucket01.getNginxUrl());
+        // 获取请求头token字符串
+        String token = request.getHeader("inhub-token");
+        String username = "";
+        if (token != null) {
+            Map<String, String> memberIdByJwtToken = JwtUtil.getMemberIdByJwtToken(token);
+            username = memberIdByJwtToken.get("username");
+        }
+        // 获取redis中用户信息
+        LoginUser loginUser = redisService.getCacheObject(username);
 
-//    @PostMapping("/uploadCarousel")
-//    public Result uploadCarousel(@RequestParam("file")MultipartFile file, @RequestParam("id") Long id, HttpServletRequest request) throws Exception {
-//        UploadResponse bucket01 = minioUtil.uploadFile(file, bucketName);
-//        System.out.println("bucket01.getMinIoUrl() = " + bucket01.getMinIoUrl());
-//        System.out.println("bucket01.getNginxUrl() = " + bucket01.getNginxUrl());
-//        // 获取请求头token字符串
-//        String token = request.getHeader("inhub-token");
-//        String username = "";
-//        if (token != null) {
-//            Map<String, String> memberIdByJwtToken = JwtUtil.getMemberIdByJwtToken(token);
-//            username = memberIdByJwtToken.get("username");
-//        }
-//        // 获取redis中用户信息
-//        LoginUser loginUser = redisService.getCacheObject(username);
-//
-//        if(id == null || id == 0) {
-//            BCarousel bCarousel = new BCarousel();
-//            bCarousel.setCreateTime(new Date());
-//            bCarousel.setBannerImg(bucket01.getMinIoUrl());
-//            bCarousel.setCarouselStatus(BannerStatusEnum.UN_PUBLISHED.getStatus());
-//            bCarousel.setIsText("否");
-//            bCarousel.setTextPosition("水平靠左垂直居中");
-//            bCarousel.setCreator(loginUser.getUsername());
-//            bCarousel.setCreatorName(loginUser.getNickname());
-//            boolean save = bCarouselService.save(bCarousel);
-//            if(save) {
-//                return Result.success().data("data",bCarousel);
-//            } else  {
-//                return Result.error().msg("上传失败，请稍后再试");
-//            }
-//        } else {
-//            QueryWrapper<BCarousel> bCarouselQueryWrapper = new QueryWrapper<>();
-//            bCarouselQueryWrapper.eq("id", id);
-//            BCarousel one;
-//            one = bCarouselService.getById(id);
-//            String filePath = one.getBannerImg();
-//            // 使用lastIndexOf()方法找到最后一个斜杠的索引
-//            int lastIndex = filePath.lastIndexOf("/");
-//            // 使用substring()方法提取最后一个斜杠后的部分
-//            String fileName = filePath.substring(lastIndex + 1);
-//            minioUtil.removeObject(bucketName,fileName);
-//            // 先删后改
-//            one.setBannerImg(bucket01.getMinIoUrl());
-//            boolean update = bCarouselService.updateById(one);
-//            if(update) {
-//                return Result.success().data("data",one);
-//            } else  {
-//                return Result.error().msg("上传失败，请稍后再试");
-//            }
-//        }
-//    }
+        if(id == null || id == 0) {
+            BCane bCane = new BCane();
+            bCane.setCreateTime(new Date());
+            bCane.setImagePath(bucket01.getMinIoUrl());
+            boolean save = bCaneService.save(bCane);
+            if(save) {
+                return Result.success().data("data",bCane);
+            } else  {
+                return Result.error().msg("上传失败，请稍后再试");
+            }
+        } else {
+            QueryWrapper<BCane> bCarouselQueryWrapper = new QueryWrapper<>();
+            bCarouselQueryWrapper.eq("id", id);
+            BCane one;
+            one = bCaneService.getById(id);
+            String filePath = one.getImagePath();
+            if(filePath != null && !filePath.isEmpty()) {
+                // 使用lastIndexOf()方法找到最后一个斜杠的索引
+                int lastIndex = filePath.lastIndexOf("/");
+                // 使用substring()方法提取最后一个斜杠后的部分
+                String fileName = filePath.substring(lastIndex + 1);
+                minioUtil.removeObject(bucketName,fileName);
+            }
+            // 先删后改
+            one.setImagePath(bucket01.getMinIoUrl());
+            boolean update = bCaneService.updateById(one);
+            if(update) {
+                return Result.success().data("data",one);
+            } else  {
+                return Result.error().msg("上传失败，请稍后再试");
+            }
+        }
+    }
 
-//    @DeleteMapping("/delCarousel/{id}/{bannerImg}")
-//    @Transactional
-//    public Result delCarousel(@PathVariable Long id,@PathVariable String bannerImg) throws Exception {
-//        boolean remove = bCarouselService.removeById(id);
-//        if(remove) {
-//            minioUtil.removeObject(bucketName,bannerImg);
-//            return Result.success();
-//        }
-//        return  Result.error();
-//    }
+    @DeleteMapping("/delCarousel/{id}/{bannerImg}")
+    @Transactional
+    public Result delCarousel(@PathVariable Long id,@PathVariable String bannerImg) throws Exception {
+        boolean remove = bCaneService.removeById(id);
+        if(remove) {
+            minioUtil.removeObject(bucketName,bannerImg);
+            return Result.success();
+        }
+        return  Result.error();
+    }
 
 
 //    @PostMapping("/uploadReasourFile")
