@@ -154,24 +154,26 @@ public class BCaneController {
     @GetMapping("getCaneByIdWithQinBen/{id}")
     public Result getCaneByIdWithQinBen(@PathVariable Integer id, HttpServletRequest request) {
         BCane bCane = bCaneService.getById(id);
-        if(bCane.getParentId() != null && !bCane.getParentId().isEmpty()) {
-            BCane father = bCaneService.getById(bCane.getParentId());
-            bCane.setFatherName(father.getCaneName());
-        } else  {
-            bCane.setFatherName("无父本");
-        }
+//        if(bCane.getParentId() != null && !bCane.getParentId().isEmpty()) {
+//            BCane father = bCaneService.getById(bCane.getParentId());
+//            bCane.setFatherName(father.getCaneName());
+//        } else  {
+//            bCane.setFatherName("无父本");
+//        }
+        bCane.setFatherName(bCane.getParentId());
+        bCane.setMotherName(bCane.getMotherId());
 
         if(bCane.getCategoryId() != null && bCane.getCategoryId() > 0) {
             BCaneCategory caneCategory = bCaneCategoryService.getById(bCane.getCategoryId());
             bCane.setCategoryName(caneCategory.getCategoryName());
         }
 
-        if(bCane.getMotherId() != null && !bCane.getMotherId().isEmpty()) {
-            BCane mother = bCaneService.getById(bCane.getMotherId());
-            bCane.setMotherName(mother.getCaneName());
-        } else {
-            bCane.setMotherName("无母本");
-        }
+//        if(bCane.getMotherId() != null && !bCane.getMotherId().isEmpty()) {
+//            BCane mother = bCaneService.getById(bCane.getMotherId());
+//            bCane.setMotherName(mother.getCaneName());
+//        } else {
+//            bCane.setMotherName("无母本");
+//        }
 
         return Result.success().data("data",bCane);
     }
