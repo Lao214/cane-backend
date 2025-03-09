@@ -165,7 +165,9 @@ public class BCaneController {
 
         if(bCane.getCategoryId() != null && bCane.getCategoryId() > 0) {
             BCaneCategory caneCategory = bCaneCategoryService.getById(bCane.getCategoryId());
-            bCane.setCategoryName(caneCategory.getCategoryName());
+            if(caneCategory != null) {
+                bCane.setCategoryName(caneCategory.getCategoryName());
+            }
         }
 
 //        if(bCane.getMotherId() != null && !bCane.getMotherId().isEmpty()) {
