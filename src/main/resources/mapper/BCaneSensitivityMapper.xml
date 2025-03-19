@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.integratedHub.dao.BCaneSensitivityMapper">
+
+    <resultMap id="BCaneMap" type="com.example.integratedHub.entity.BCaneSensitivity" autoMapping="true"></resultMap>
+
+    <select id="selectPage" resultMap="BCaneMap">
+        SELECT
+            bcs.id,
+            bcs.cane_name,
+            bcs.resistance_level,
+            bcs.trichome,
+            bcs.bud_type,
+            bcs.stem,
+            bcs.leaf_sheath,
+            bcs.epidermal_cells,
+            bcs.cuticle_stratum_corneum,
+            bcs.silicon_cell,
+            bcs.thrombocytes,
+            bcs.stomata,
+            bcs.chloroplast,
+            bcs.mitochondria,
+            bcs.stress_resistant_chemicals,
+            bcs.stress_resistance_enzyme,
+            bcs.create_time
+        FROM
+            b_cane_sensitivity bcs
+        <where>
+            <if test="vo.keyword != null and vo.keyword != ''">
+                AND (bcs.cane_name LIKE CONCAT('%', #{vo.keyword}, '%') OR bcs.references LIKE CONCAT('%', #{vo.keyword}, '%'))
+            </if>
+        </where>
+        <choose>
+            <when test="vo.sortType == 'nums'">
+                ORDER BY bcs.view_count DESC
+            </when>
+            <otherwise>
+                ORDER BY bcs.id DESC
+            </otherwise>
+        </choose>
+    </select>
+
+
+</mapper>

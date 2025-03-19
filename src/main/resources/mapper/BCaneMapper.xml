@@ -26,9 +26,6 @@
             <if test="vo.keyword != null and vo.keyword != ''">
                 AND (bc.cane_name LIKE CONCAT('%', #{vo.keyword}, '%') OR bc.description LIKE CONCAT('%', #{vo.keyword}, '%'))
             </if>
-            <if test="vo.categoryId != null and vo.categoryId != ''">
-                AND bc.category_id = #{vo.categoryId}
-            </if>
         </where>
         <choose>
             <when test="vo.sortType == 'nums'">

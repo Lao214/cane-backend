@@ -41,10 +41,10 @@ public class CodeGenerator {
 
         // 3、数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setUrl("jdbc:mysql://localhost:3306/cane");
+        dsc.setUrl("jdbc:mysql://43.136.93.160:3306/cane");
         dsc.setDriverName("com.mysql.cj.jdbc.Driver");
-        dsc.setUsername("root");
-        dsc.setPassword("root1234");
+        dsc.setUsername("test");
+        dsc.setPassword("Qwer1234#");
         dsc.setDbType(DbType.MYSQL);
         mpg.setDataSource(dsc);
 
@@ -61,7 +61,7 @@ public class CodeGenerator {
         // 5、策略配置
         StrategyConfig strategy = new StrategyConfig();
         /**表的名称**/
-        strategy.setInclude("b_cane_qa");
+        strategy.setInclude("b_cane_sensitivity");
         strategy.setNaming(NamingStrategy.underline_to_camel);//数据库表映射到实体的命名策略
         strategy.setTablePrefix(pc.getModuleName() + "_"); //生成实体时去掉表前缀
 
