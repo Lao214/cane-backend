@@ -9,20 +9,10 @@
             bcs.id,
             bcs.cane_name,
             bcs.resistance_level,
-            bcs.trichome,
-            bcs.bud_type,
-            bcs.stem,
-            bcs.leaf_sheath,
-            bcs.epidermal_cells,
-            bcs.cuticle_stratum_corneum,
-            bcs.silicon_cell,
-            bcs.thrombocytes,
-            bcs.stomata,
-            bcs.chloroplast,
-            bcs.mitochondria,
-            bcs.stress_resistant_chemicals,
-            bcs.stress_resistance_enzyme,
-            bcs.create_time
+            bcs.resistance_level_han,
+            bcs.resistance_level_hei,
+            bcs.create_time,
+            bcs.view_count
         FROM
             b_cane_sensitivity bcs
         <where>
