@@ -1,6 +1,7 @@
 package com.example.integratedHub.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.integratedHub.entity.BCane;
@@ -143,6 +144,37 @@ public class BCaneSensitivityController {
         // 调用service方法
         IPage<BCaneSensitivity> pageModel = bCaneSensitivityService.selectPage(pageParam,bCane);
         return Result.success().data("data",pageModel);
+    }
+
+    @GetMapping("getFilterOptions")
+    public Result getFilterOptions(HttpServletRequest request) {
+        // 获取请求头token字符串
+        QueryWrapper<BCaneSensitivity> bCaneQueryWrapper = new QueryWrapper<>();
+        bCaneQueryWrapper.select("DISTINCT resistance_level as value","resistance_level as label");
+        // 添加过滤条件：排除 NULL 和空字符串
+        bCaneQueryWrapper
+                .isNotNull("resistance_level") // intor_business IS NOT NULL
+                .ne("resistance_level", "");   // intor_business != ''
+        List<BCaneSensitivity> resistanceLevelOptions = bCaneSensitivityService.list(bCaneQueryWrapper);
+
+        QueryWrapper<BCaneSensitivity> bCaneQueryWrapperTwo = new QueryWrapper<>();
+        bCaneQueryWrapperTwo.select("DISTINCT resistance_level_hei as value","resistance_level_hei as label");
+        // 添加过滤条件：排除 NULL 和空字符串
+        bCaneQueryWrapperTwo
+                .isNotNull("resistance_level_hei") // intor_business IS NOT NULL
+                .ne("resistance_level_hei", "");   // intor_business != ''
+        List<BCaneSensitivity> resistanceLevelOptionsHei = bCaneSensitivityService.list(bCaneQueryWrapperTwo);
+
+        QueryWrapper<BCaneSensitivity> bCaneQueryWrapperThree = new QueryWrapper<>();
+        bCaneQueryWrapperThree.select("DISTINCT resistance_level_han as value","resistance_level_han as label");
+        // 添加过滤条件：排除 NULL 和空字符串
+        bCaneQueryWrapperThree
+                .isNotNull("resistance_level_han") // intor_business IS NOT NULL
+                .ne("resistance_level_han", "");   // intor_business != ''
+        List<BCaneSensitivity> resistanceLevelOptionsHan = bCaneSensitivityService.list(bCaneQueryWrapperThree);
+
+
+        return Result.success().data("resistanceLevelOptions",resistanceLevelOptions).data("resistanceLevelOptionsHei",resistanceLevelOptionsHei).data("resistanceLevelOptionsHan",resistanceLevelOptionsHan);
     }
 
 }

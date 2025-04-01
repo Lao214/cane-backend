@@ -202,5 +202,37 @@ public class BCaneController {
     }
 
 
+    @GetMapping("getFilterOptions")
+    public Result getFilterOptions(HttpServletRequest request) {
+        // 获取请求头token字符串
+        QueryWrapper<BCane> bCaneQueryWrapper = new QueryWrapper<>();
+        bCaneQueryWrapper.select("DISTINCT parent_id as value","parent_id as label");
+        // 添加过滤条件：排除 NULL 和空字符串
+        bCaneQueryWrapper
+                .isNotNull("parent_id") // intor_business IS NOT NULL
+                .ne("parent_id", "");   // intor_business != ''
+        List<BCane> ParentOptions = bCaneService.list(bCaneQueryWrapper);
+
+        QueryWrapper<BCane> bCaneQueryWrapperTwo = new QueryWrapper<>();
+        bCaneQueryWrapperTwo.select("DISTINCT mother_id as value","mother_id as label");
+        // 添加过滤条件：排除 NULL 和空字符串
+        bCaneQueryWrapperTwo
+                .isNotNull("mother_id") // intor_business IS NOT NULL
+                .ne("mother_id", "");   // intor_business != ''
+        List<BCane> MotherOptions = bCaneService.list(bCaneQueryWrapperTwo);
+
+        QueryWrapper<BCane> bCaneQueryWrapperThree = new QueryWrapper<>();
+        bCaneQueryWrapperThree.select("DISTINCT intor_business as value","intor_business as label");
+        // 添加过滤条件：排除 NULL 和空字符串
+        bCaneQueryWrapperThree
+                .isNotNull("intor_business") // intor_business IS NOT NULL
+                .ne("intor_business", "");   // intor_business != ''
+        List<BCane> businessOptions = bCaneService.list(bCaneQueryWrapperThree);
+
+
+        return Result.success().data("parentOptions",ParentOptions).data("motherOptions",MotherOptions).data("businessOptions",businessOptions);
+    }
+
+
 }
 

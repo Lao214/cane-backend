@@ -19,6 +19,15 @@
             <if test="vo.keyword != null and vo.keyword != ''">
                 AND (bcs.cane_name LIKE CONCAT('%', #{vo.keyword}, '%') OR bcs.references LIKE CONCAT('%', #{vo.keyword}, '%'))
             </if>
+            <if test="vo.resistanceLevel != null and vo.resistanceLevel != ''">
+                AND (bcs.resistance_level = #{vo.resistanceLevel})
+            </if>
+            <if test="vo.resistanceLevelHei != null and vo.resistanceLevelHei != ''">
+                AND (bcs.resistance_level_hei = #{vo.resistanceLevelHei})
+            </if>
+            <if test="vo.resistanceLevelHan != null and vo.resistanceLevelHan != ''">
+                AND (bcs.resistance_level_han = #{vo.resistanceLevelHan})
+            </if>
         </where>
         <choose>
             <when test="vo.sortType == 'nums'">

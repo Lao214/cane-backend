@@ -26,6 +26,27 @@
             <if test="vo.keyword != null and vo.keyword != ''">
                 AND (bc.cane_name LIKE CONCAT('%', #{vo.keyword}, '%') OR bc.description LIKE CONCAT('%', #{vo.keyword}, '%'))
             </if>
+            <if test="vo.cityCodes != null and vo.cityCodes != ''">
+                AND (bc.city_codes LIKE CONCAT('%', #{vo.cityCodes}, '%'))
+            </if>
+            <if test="vo.intorBusiness != null and vo.intorBusiness != ''">
+                AND (bc.intor_business = #{vo.intorBusiness})
+            </if>
+            <if test="vo.parentId != null and vo.parentId != ''">
+                AND (bc.parent_id = #{vo.parentId})
+            </if>
+            <if test="vo.motherId != null and vo.motherId != ''">
+                AND (bc.mother_id = #{vo.motherId})
+            </if>
+            <if test="vo.droughtResistance != null and vo.droughtResistance != ''">
+                AND (bc.drought_resistance = #{vo.droughtResistance})
+            </if>
+            <if test="vo.coldResistance != null and vo.coldResistance != ''">
+                AND (bc.cold_resistance = #{vo.coldResistance})
+            </if>
+            <if test="vo.smutResistance != null and vo.smutResistance != ''">
+                AND (bc.smut_resistance = #{vo.smutResistance})
+            </if>
         </where>
         <choose>
             <when test="vo.sortType == 'nums'">
