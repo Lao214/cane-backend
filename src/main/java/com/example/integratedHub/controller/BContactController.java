@@ -83,6 +83,12 @@ public class BContactController {
         return Result.success().data("one",one);
     }
 
+    @DeleteMapping("/delContact/{id}")
+    public Result delContact(@PathVariable String id, HttpServletRequest request) {
+       bContactService.removeById(id);
+        return Result.success();
+    }
+
     @GetMapping("readed/{id}")
     public Result readed(@PathVariable Long id, HttpServletRequest request) {
         BContact bContact = new BContact();
