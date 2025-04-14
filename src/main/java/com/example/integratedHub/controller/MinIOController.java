@@ -5,8 +5,10 @@ package com.example.integratedHub.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.integratedHub.entity.BCane;
+import com.example.integratedHub.entity.BImg;
 import com.example.integratedHub.entity.securityVo.LoginUser;
 import com.example.integratedHub.service.BCaneService;
+import com.example.integratedHub.service.BImgService;
 import com.example.integratedHub.utils.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -40,6 +42,9 @@ public class MinIOController {
 
     @Autowired
     private BCaneService bCaneService;
+
+    @Autowired
+    private BImgService bImgService;
 
 
     @PostMapping("/uploadCarousel")
@@ -97,6 +102,45 @@ public class MinIOController {
         boolean remove = bCaneService.removeById(id);
         if(remove) {
             minioUtil.removeObject(bucketName,bannerImg);
+            return Result.success();
+        }
+        return  Result.error();
+    }
+
+    @PostMapping("/uploadImg")
+    public Result uploadImg(@RequestParam("file") MultipartFile file,@RequestParam("desc") String desc,@RequestParam("imgName") String imgName, HttpServletRequest request) throws Exception {
+        UploadResponse bucket01 = minioUtil.uploadFile(file, bucketName);
+        System.out.println("bucket01.getMinIoUrl() = " + bucket01.getMinIoUrl());
+        System.out.println("bucket01.getNginxUrl() = " + bucket01.getNginxUrl());
+        // 获取请求头token字符串
+        String token = request.getHeader("inhub-token");
+        String username = "";
+        if (token != null) {
+            Map<String, String> memberIdByJwtToken = JwtUtil.getMemberIdByJwtToken(token);
+            username = memberIdByJwtToken.get("username");
+        }
+        // 获取redis中用户信息
+        LoginUser loginUser = redisService.getCacheObject(username);
+
+        BImg bImg = new BImg();
+        bImg.setCreateTime(new Date());
+        bImg.setImgPath(bucket01.getMinIoUrl());
+        bImg.setImgDesc(desc);
+        bImg.setImgName(imgName);
+        boolean save = bImgService.save(bImg);
+        if(save) {
+            return Result.success().data("data",bImg);
+        } else  {
+            return Result.error().msg("上传失败，请稍后再试");
+        }
+    }
+
+    @DeleteMapping("/delImg/{id}/{imgName}")
+    @Transactional
+    public Result delImg(@PathVariable Long id,@PathVariable String imgName) throws Exception {
+        boolean remove = bImgService.removeById(id);
+        if(remove) {
+            minioUtil.removeObject(bucketName,imgName);
             return Result.success();
         }
         return  Result.error();
