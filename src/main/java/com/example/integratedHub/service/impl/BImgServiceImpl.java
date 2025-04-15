@@ -1,5 +1,7 @@
 package com.example.integratedHub.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.integratedHub.entity.BImg;
 import com.example.integratedHub.dao.BImgMapper;
 import com.example.integratedHub.service.BImgService;
@@ -17,4 +19,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class BImgServiceImpl extends ServiceImpl<BImgMapper, BImg> implements BImgService {
 
+    @Override
+    public IPage<BImg> selectPage(Page<BImg> pageParam, BImg bImg) {
+        return baseMapper.selectPage(pageParam,bImg);
+    }
 }

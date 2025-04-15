@@ -1,5 +1,7 @@
 package com.example.integratedHub.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.integratedHub.entity.BImg;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -13,4 +15,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface BImgService extends IService<BImg> {
 
+    IPage<BImg> selectPage(Page<BImg> pageParam, BImg bImg);
 }

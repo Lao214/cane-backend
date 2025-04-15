@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.integratedHub.dao.BImgMapper">
+
+    <resultMap id="imgMap" type="com.example.integratedHub.entity.BImg"></resultMap>
+
+    <select id="selectPage" resultMap="imgMap">
+        select *
+        from b_img
+        <where>
+            1 = 1
+            <if test="vo.imgDesc != null and vo.imgDesc != ''">
+                and (img_desc like CONCAT('%',#{vo.imgDesc},'%'))
+            </if>
+            <if test="vo.imgName != null and vo.imgName != ''">
+                and (img_name like CONCAT('%',#{vo.imgName},'%'))
+            </if>
+        </where>
+        order by id desc
+    </select>
+
+</mapper>
