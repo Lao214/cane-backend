@@ -1,5 +1,7 @@
 package com.example.integratedHub.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.integratedHub.entity.BFBase;
 import com.example.integratedHub.dao.BFBaseMapper;
 import com.example.integratedHub.service.BFBaseService;
@@ -17,4 +19,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class BFBaseServiceImpl extends ServiceImpl<BFBaseMapper, BFBase> implements BFBaseService {
 
+    @Override
+    public IPage<BFBase> selectPage(Page<BFBase> pageParam, BFBase bfBase) {
+        return baseMapper.selectPage(pageParam,bfBase);
+    }
 }

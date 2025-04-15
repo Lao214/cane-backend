@@ -1,8 +1,11 @@
 package com.example.integratedHub.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
+
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -16,12 +19,12 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-//@ApiModel(value="BWumingBase对象", description="")
+@TableName("b_wuming_base") // 替换为实际表名
 public class BWumingBase implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-      @TableId(value = "id", type = IdType.AUTO)
+    @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
     //@ApiModelProperty(value = "基地名称")
@@ -228,6 +231,5 @@ public class BWumingBase implements Serializable {
     private String qys;
 
     private String qysAve;
-
 
 }

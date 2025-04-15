@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.integratedHub.dao.BImgMapper">
 
-    <resultMap id="imgMap" type="com.example.integratedHub.entity.BImg"></resultMap>
+    <resultMap id="imgMap" type="com.example.integratedHub.entity.BImg" autoMapping="true"></resultMap>
 
     <select id="selectPage" resultMap="imgMap">
         select *
