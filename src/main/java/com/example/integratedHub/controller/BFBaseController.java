@@ -33,7 +33,7 @@ public class BFBaseController {
     private BFBaseService bfBaseService;
 
     @GetMapping("getPageData/{page}/{limit}")
-    public Result getData(@PathVariable Long page, @PathVariable Long limit, BFBase bWumingBase, HttpServletRequest request) {
+    public Result getData(@PathVariable Long page, @PathVariable Long limit, BFBase bfBase, HttpServletRequest request) {
         //创建page对象
         Page<BFBase> pageParam = new Page<>(page,limit);
         //获取请求头token字符串
@@ -42,7 +42,7 @@ public class BFBaseController {
         //从token字符串获取用户名称（id）
         //String username = JwtHelper.getUsername(token);
         //调用service方法
-        IPage<BFBase> pageModel = bfBaseService.selectPage(pageParam,bWumingBase);
+        IPage<BFBase> pageModel = bfBaseService.selectPage(pageParam,bfBase);
         return Result.success().data("data",pageModel);
     }
 

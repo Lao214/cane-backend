@@ -8,11 +8,17 @@
         select *
         from b_f_base
         <where>
-            1 = 1
             <if test="vo.varietyName != null and vo.varietyName != ''">
-                and (variety_name like CONCAT('%',#{vo.varietyName},'%'))
+               variety_name like CONCAT('%',#{vo.varietyName},'%')
+            </if>
+            <if test="vo.yangFang != null and vo.yangFang != ''">
+                and (yang_fang = #{vo.yangFang} )
+            </if>
+            <if test="vo.yangPlant != null and vo.yangPlant != ''">
+                and (yang_plant = #{vo.yangPlant} )
             </if>
         </where>
         order by id desc
     </select>
+
 </mapper>

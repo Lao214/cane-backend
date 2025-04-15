@@ -232,4 +232,6 @@ public class BWumingBase implements Serializable {
 
     private String qysAve;
 
+    @TableField(exist = false)
+    private String keyword;
 }

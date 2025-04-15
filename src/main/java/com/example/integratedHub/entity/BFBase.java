@@ -1,6 +1,7 @@
 package com.example.integratedHub.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import lombok.Data;
@@ -80,5 +81,6 @@ public class BFBase implements Serializable {
 
     private String miaoshuAve;
 
-
+    @TableField(exist = false)
+    private String keyword;
 }
