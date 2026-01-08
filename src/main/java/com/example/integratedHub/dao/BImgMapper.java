@@ -12,7 +12,7 @@ import io.lettuce.core.dynamic.annotation.Param;
  *  Mapper 接口
  * </p>
  *
- * @author 劳威锟
+ * @author 苏运浩
  * @since 2025-04-14
  */
 public interface BImgMapper extends BaseMapper<BImg> {

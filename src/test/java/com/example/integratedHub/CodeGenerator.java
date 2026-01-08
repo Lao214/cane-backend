@@ -29,7 +29,7 @@ public class CodeGenerator {
         GlobalConfig gc = new GlobalConfig();
         String projectPath = System.getProperty("user.dir");
         gc.setOutputDir(projectPath+ "/src/main/java");//路径 尽量用绝对的
-        gc.setAuthor("劳威锟"); //作者
+        gc.setAuthor("苏运浩"); //作者
         gc.setOpen(false);     //生成后是否打开资源管理器
         gc.setFileOverride(false); //重新生成时文件是否覆盖
         gc.setServiceName("%sService");	//去掉Service接口的首字母I

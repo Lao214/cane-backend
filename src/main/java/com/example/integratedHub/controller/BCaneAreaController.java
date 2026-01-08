@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
  * 种质区域信息表格 前端控制器
  * </p>
  *
- * @author 劳威锟
+ * @author 苏运浩
  * @since 2025-01-14
  */
 @RestController

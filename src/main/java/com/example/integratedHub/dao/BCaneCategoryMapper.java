@@ -12,7 +12,7 @@ import org.apache.ibatis.annotations.Param;
  * 甘蔗分类表 Mapper 接口
  * </p>
  *
- * @author 劳威锟
+ * @author 苏运浩
  * @since 2025-01-14
  */
 public interface BCaneCategoryMapper extends BaseMapper<BCaneCategory> {

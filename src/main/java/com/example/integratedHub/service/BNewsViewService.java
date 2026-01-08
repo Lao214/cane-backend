@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  *  服务类
  * </p>
  *
- * @author 劳威锟
+ * @author 苏运浩
  * @since 2024-05-27
  */
 public interface BNewsViewService extends IService<BNewsView> {

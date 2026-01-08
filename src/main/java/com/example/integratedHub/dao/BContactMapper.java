@@ -13,7 +13,7 @@ import org.apache.ibatis.annotations.Param;
  * 联系我们 Mapper 接口
  * </p>
  *
- * @author 劳威锟
+ * @author 苏运浩
  * @since 2024-05-29
  */
 public interface BContactMapper extends BaseMapper<BContact> {

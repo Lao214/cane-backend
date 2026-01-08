@@ -12,7 +12,7 @@ import org.apache.ibatis.annotations.Param;
  * 敏感性指标数据库 Mapper 接口
  * </p>
  *
- * @author 劳威锟
+ * @author 苏运浩
  * @since 2025-03-19
  */
 public interface BCaneSensitivityMapper extends BaseMapper<BCaneSensitivity> {

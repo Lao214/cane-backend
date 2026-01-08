@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
  * 种质区域信息表格 服务实现类
  * </p>
  *
- * @author 劳威锟
+ * @author 苏运浩
  * @since 2025-01-14
  */
 @Service

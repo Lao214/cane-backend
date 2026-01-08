@@ -33,7 +33,7 @@ import java.util.Objects;
  *  前端控制器
  * </p>
  *
- * @author 劳威锟
+ * @author 苏运浩
  * @since 2023-02-18
  */
 @RestController
@@ -109,7 +109,7 @@ public class BUserController {
      * @description:  获取用户信息
      * @param:
      * @return:
-     * @author 劳威锟
+     * @author 苏运浩
      * @date: 2023/7/31 2:31 PM
      */
 //    @PreAuthorize("hasAnyAuthority('ADD_K')")

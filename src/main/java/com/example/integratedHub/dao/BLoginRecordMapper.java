@@ -15,7 +15,7 @@ import java.util.List;
  *  Mapper 接口
  * </p>
  *
- * @author 劳威锟
+ * @author 苏运浩
  * @since 2024-08-16
  */
 public interface BLoginRecordMapper extends BaseMapper<BLoginRecord> {

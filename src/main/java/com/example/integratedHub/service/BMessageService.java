@@ -10,7 +10,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * 消息表 服务类
  * </p>
  *
- * @author 劳威锟
+ * @author 苏运浩
  * @since 2024-08-25
  */
 public interface BMessageService extends IService<BMessage> {
