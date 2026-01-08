@@ -3,7 +3,7 @@ package com.example.integratedHub.entity.properties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
- * @author lao
+ * @author 苏运浩
  * @version 1.0
  * @description: TODO
  * @date 2023/8/11 4:52 PM
