@@ -17,7 +17,7 @@ import lombok.EqualsAndHashCode;
  * 甘蔗分类表
  * </p>
  *
- * @author 劳威锟
+ * @author 苏运浩
  * @since 2025-01-14
  */
 @Data

@@ -10,7 +10,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * 专家答疑问答表 服务类
  * </p>
  *
- * @author 劳威锟
+ * @author 苏运浩
  * @since 2025-01-14
  */
 public interface BCaneQaService extends IService<BCaneQa> {

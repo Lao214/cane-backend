@@ -10,7 +10,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * 甘蔗表 服务类
  * </p>
  *
- * @author 劳威锟
+ * @author 苏运浩
  * @since 2025-01-14
  */
 public interface BCaneService extends IService<BCane> {

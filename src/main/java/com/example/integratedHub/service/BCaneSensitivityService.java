@@ -11,7 +11,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * 敏感性指标数据库 服务类
  * </p>
  *
- * @author 劳威锟
+ * @author 苏运浩
  * @since 2025-03-19
  */
 public interface BCaneSensitivityService extends IService<BCaneSensitivity> {
